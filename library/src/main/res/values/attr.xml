@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- RTextView -->
+    <declare-styleable name="RTextView">
+
+        <!--四周圆角度、左上、右上、左下、右下-->
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_radius_top_left" format="dimension" />
+        <attr name="corner_radius_top_right" format="dimension" />
+        <attr name="corner_radius_bottom_left" format="dimension" />
+        <attr name="corner_radius_bottom_right" format="dimension" />
+
+        <!--虚线边框宽度/间隔-->
+        <attr name="border_dash_width" format="dimension" />
+        <attr name="border_dash_gap" format="dimension" />
+
+        <!--边框宽度-->
+        <attr name="border_width_normal" format="dimension" />
+        <attr name="border_width_pressed" format="dimension" />
+        <attr name="border_width_unable" format="dimension" />
+
+        <!--边框颜色-->
+        <attr name="border_color_normal" format="color" />
+        <attr name="border_color_pressed" format="color" />
+        <attr name="border_color_unable" format="color" />
+
+        <!--背景颜色-->
+        <attr name="background_normal" format="color" />
+        <attr name="background_pressed" format="color" />
+        <attr name="background_unable" format="color" />
+
+        <!--文本颜色-->
+        <attr name="text_color_normal" format="color" />
+        <attr name="text_color_pressed" format="color" />
+        <attr name="text_color_unable" format="color" />
+
+        <!--图标资源-->
+        <attr name="icon_src_normal" format="reference" />
+        <attr name="icon_src_pressed" format="reference" />
+        <attr name="icon_src_unable" format="reference" />
+
+        <!--图标、大小、位置-->
+        <attr name="icon_height" format="dimension" />
+        <attr name="icon_width" format="dimension" />
+        <attr name="icon_direction">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+
+    </declare-styleable>
+
+</resources>
