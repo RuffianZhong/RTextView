@@ -25,7 +25,7 @@
 > 
 > 是不是常用的TextView的功能都在这里了？
 
-###属性说明
+### 属性说明
 
 | 属性			|说明			 |
 | ------------- |  :-------------|
@@ -55,7 +55,7 @@
 | icon_width      				|   drawable icon 	宽 			|
 | icon_direction      			|   drawable icon 	位置{left,top,right,bottom} |
 
-###XML使用
+### XML使用
     <com.ruffian.library.RTextView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -110,7 +110,7 @@
 
 
 ### 以上属性均提供Java代码 set/get 方法
-        RTextView textView=(RTextView) findViewById(R.id.text1);
+    	RTextView textView=(RTextView) findViewById(R.id.text1);
         //set...
         textView.setIconNormal(getDrawable(R.mipmap.ic_launcher))
                 .setIconHeight(10)
@@ -120,6 +120,6 @@
         int iconHeight=textView.getIconHeight();
 
 
-###开发者们，根据你们的需求尽情去撸码吧，使用过程中遇到什么问题请大方的提个Issues，觉得实用的话就star 以便及时获取最新版本
+### 开发者们，根据你们的需求尽情去撸码吧，使用过程中遇到什么问题请大方的提个Issues，觉得实用的话就star 以便及时获取最新版本
 
-###BLOG：[http://blog.csdn.net/u014702653?viewmode=contents](http://blog.csdn.net/u014702653?viewmode=contents)
+### BLOG：[http://blog.csdn.net/u014702653?viewmode=contents](http://blog.csdn.net/u014702653?viewmode=contents)
