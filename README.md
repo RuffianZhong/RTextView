@@ -3,7 +3,7 @@
 
 ## 欢迎使用 RTextView 
 
-### 特点
+### 1.特点
 
 > 1. RTextView 让你从此不再编写和管理大量 selector 文件（这个太可恨了）
 > 
@@ -17,15 +17,19 @@
 
 
 
-### 话不多说直接上图
+### 2.效果图
+
+> 示例效果图，不限于如此，更多使用详细参考相关属性
+
 ![](corner.png)   ![](state.gif)
 
 
-> 如何，有没有一个控件搞定所有布局的既视感？
-> 
-> 是不是常用的TextView的功能都在这里了？
 
-### 属性说明
+### 3.属性说明
+
+> 开发者根据实际需要选择使用对应的功能属性
+
+
 
 | 属性			|说明			 |
 | ------------- |  :-------------|
@@ -55,7 +59,13 @@
 | icon_width      				|   drawable icon 	宽 			|
 | icon_direction      			|   drawable icon 	位置{left,top,right,bottom} |
 
-### XML使用
+### 4.使用
+> ### 4.1  Gradle （版本号根据更新历史使用最新版）
+
+    compile 'com.ruffian.library:RTextView:1.0.0'
+
+> ### 4.2 XML使用
+
     <com.ruffian.library.RTextView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -109,7 +119,8 @@
         />
 
 
-### 以上属性均提供Java代码 set/get 方法
+> ### 4.3 以上属性均提供Java代码 get/set 方法
+
     	RTextView textView=(RTextView) findViewById(R.id.text1);
         //set...
         textView.setIconNormal(getDrawable(R.mipmap.ic_launcher))
@@ -120,6 +131,8 @@
         int iconHeight=textView.getIconHeight();
 
 
-### 开发者们，根据你们的需求尽情去撸码吧，使用过程中遇到什么问题请大方的提个Issues，觉得实用的话就star 以便及时获取最新版本
+### 5.版本历史
 
-### BLOG：[http://blog.csdn.net/u014702653?viewmode=contents](http://blog.csdn.net/u014702653?viewmode=contents)
+**v1.0.0**　`2017.09.07`　发布第一版本
+
+
