@@ -8,18 +8,20 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.TextView;
 
 /**
  * RTextView
- * 常用TextView功能封装
- * 1.去除繁琐的selector编写,方便快速
- * 2.可设置的drawableLeft...大小
- * 3.自定义各个圆角背景,默认状态/按下状态/不可操作状态
- * ...
+ * <p>
+ * 1. RTextView 让你从此不再编写和管理大量 selector 文件（这个太可恨了）
+ * 2. RTextView 改造了 drawableLeft/drawableXXX 图片的大小，从此你不在需要使用 LinearLayout + ImageView + TextView 就能够直接实现文字带图片的功能，关键还能设置icon大小
+ * 3. RTextView 能够直接设置各种圆角效果： 四周圆角，某一方向圆角，甚至椭圆，圆形都简单实现。 边框效果，虚线边框都是一个属性搞定
+ * 4. RTextView 不仅能够定义默认状态的背景，边框，连按下/点击状态通通一起搞定
+ * 5. RTextView 按下变色支持：背景色，边框，文字，drawableLeft/xxx （这个赞啊）
+ * <p>
+ * https://github.com/RuffianZhong/RTextView
  *
  * @author ZhongDaFeng
  */
@@ -297,6 +299,7 @@ public class RTextView extends TextView {
     /************************
      * Icon
      ************************/
+
     public RTextView setIconNormal(Drawable icon) {
         this.mIconNormal = icon;
         this.mIcon = icon;
@@ -396,6 +399,7 @@ public class RTextView extends TextView {
     /************************
      * text color
      ************************/
+
     public RTextView setTextColorNormal(int textColor) {
         this.mTextColorNormal = textColor;
         setTextColor();
@@ -442,6 +446,7 @@ public class RTextView extends TextView {
     /*********************
      * border
      *********************/
+
     public RTextView setBorderWidthNormal(int width) {
         this.mBorderWidthNormal = width;
         setBorder(mBackgroundNormal, mBorderColorNormal, mBorderWidthNormal);
@@ -553,6 +558,7 @@ public class RTextView extends TextView {
     /*********************
      * radius
      ********************/
+
     public void setCornerRadius(float radius) {
         this.mCornerRadius = radius;
         setRadius();
