@@ -24,6 +24,10 @@
 ![](corner.png)   ![](state.gif)
 
 
+`V1.0.1` Typeface 字体样式
+
+![](version_typeface.png)
+
 
 ### 3.属性说明
 
@@ -118,8 +122,8 @@
         rtv:text_color_pressed="#3F51B5"
         rtv:text_color_unable="#FF4081"
 
-		//字体样式
-		rtv:text_typeface="fonts/RobotoMono-Thin.ttf"
+        //字体样式
+        rtv:text_typeface="fonts/RobotoMono-Thin.ttf"
         />
 
 
