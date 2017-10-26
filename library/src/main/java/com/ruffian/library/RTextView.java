@@ -1,12 +1,15 @@
 package com.ruffian.library;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
@@ -74,6 +77,9 @@ public class RTextView extends TextView {
     private Drawable mIconPressed;
     private Drawable mIconUnable;
 
+    //typeface
+    private String mTypefacePath;
+
     private int[][] states = new int[4][];
     private StateListDrawable mStateBackground;
     private float mBorderRadii[] = new float[8];
@@ -82,6 +88,7 @@ public class RTextView extends TextView {
      * Cache the touch slop from the context that created the view.
      */
     private int mTouchSlop;
+    private Context mContext;
 
     public RTextView(Context context) {
         this(context, null);
@@ -89,6 +96,7 @@ public class RTextView extends TextView {
 
     public RTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         initAttributeSet(context, attrs);
     }
@@ -187,19 +195,12 @@ public class RTextView extends TextView {
         mTextColorNormal = a.getColor(R.styleable.RTextView_text_color_normal, getCurrentTextColor());
         mTextColorPressed = a.getColor(R.styleable.RTextView_text_color_pressed, getCurrentTextColor());
         mTextColorUnable = a.getColor(R.styleable.RTextView_text_color_unable, getCurrentTextColor());
-
         //background
         mBackgroundColorNormal = a.getColor(R.styleable.RTextView_background_normal, 0);
         mBackgroundColorPressed = a.getColor(R.styleable.RTextView_background_pressed, 0);
         mBackgroundColorUnable = a.getColor(R.styleable.RTextView_background_unable, 0);
-
-        mBackgroundNormal = new GradientDrawable();
-        mBackgroundPressed = new GradientDrawable();
-        mBackgroundUnable = new GradientDrawable();
-
-        mBackgroundNormal.setColor(mBackgroundColorNormal);
-        mBackgroundPressed.setColor(mBackgroundColorPressed);
-        mBackgroundUnable.setColor(mBackgroundColorUnable);
+        //typeface
+        mTypefacePath = a.getString(R.styleable.RTextView_text_typeface);
 
         a.recycle();
 
@@ -213,12 +214,30 @@ public class RTextView extends TextView {
      */
     private void setup() {
 
+        mBackgroundNormal = new GradientDrawable();
+        mBackgroundPressed = new GradientDrawable();
+        mBackgroundUnable = new GradientDrawable();
+
         Drawable drawable = getBackground();
         if (drawable != null && drawable instanceof StateListDrawable) {
             mStateBackground = (StateListDrawable) drawable;
         } else {
             mStateBackground = new StateListDrawable();
         }
+
+        /**
+         * 设置背景默认值
+         */
+        if (mBackgroundColorPressed == 0) {
+            mBackgroundColorPressed = mBackgroundColorNormal;
+        }
+        if (mBackgroundColorUnable == 0) {
+            mBackgroundColorUnable = mBackgroundColorNormal;
+        }
+
+        mBackgroundNormal.setColor(mBackgroundColorNormal);
+        mBackgroundPressed.setColor(mBackgroundColorPressed);
+        mBackgroundUnable.setColor(mBackgroundColorUnable);
 
         //pressed, focused, normal, unable
         states[0] = new int[]{android.R.attr.state_enabled, android.R.attr.state_pressed};
@@ -237,7 +256,7 @@ public class RTextView extends TextView {
         }
 
         /**
-         * 赋值为默认值
+         * 设置边框默认值
          */
         if (mBorderWidthPressed == 0) {
             mBorderWidthPressed = mBorderWidthNormal;
@@ -252,9 +271,9 @@ public class RTextView extends TextView {
             mBorderColorUnable = mBorderColorNormal;
         }
 
-        if (mBackgroundColorNormal == 0 && mBackgroundColorUnable == 0 && mBackgroundColorPressed == 0) {
-            if (mBorderColorPressed == 0 && mBorderColorUnable == 0 && mBorderColorNormal == 0) {
-                setBackground(getBackground());
+        if (mBackgroundColorNormal == 0 && mBackgroundColorUnable == 0 && mBackgroundColorPressed == 0) {//未设置自定义背景色
+            if (mBorderColorPressed == 0 && mBorderColorUnable == 0 && mBorderColorNormal == 0) {//未设置自定义边框
+                setBackground(getBackground());//获取原生背景并设置
             } else {
                 setBackground(mStateBackground);
             }
@@ -276,6 +295,9 @@ public class RTextView extends TextView {
         //设置圆角
         setRadius();
 
+        //设置文本字体样式
+        setTypeface();
+
     }
 
     /**
@@ -294,6 +316,72 @@ public class RTextView extends TextView {
             flag = true;
         }
         return flag;
+    }
+
+    /*********************
+     * BackgroundColor
+     ********************/
+
+    public RTextView setStateBackgroundColor(int normal, int pressed, int unable) {
+        mBackgroundColorNormal = normal;
+        mBackgroundColorPressed = pressed;
+        mBackgroundColorUnable = unable;
+        mBackgroundNormal.setColor(mBackgroundColorNormal);
+        mBackgroundPressed.setColor(mBackgroundColorPressed);
+        mBackgroundUnable.setColor(mBackgroundColorUnable);
+        return this;
+    }
+
+    public int getBackgroundColorNormal() {
+        return mBackgroundColorNormal;
+    }
+
+    public RTextView setBackgroundColorNormal(int colorNormal) {
+        this.mBackgroundColorNormal = colorNormal;
+        mBackgroundNormal.setColor(mBackgroundColorNormal);
+        return this;
+    }
+
+    public int getBackgroundColorPressed() {
+        return mBackgroundColorPressed;
+    }
+
+    public RTextView setBackgroundColorPressed(int colorPressed) {
+        this.mBackgroundColorPressed = colorPressed;
+        mBackgroundPressed.setColor(mBackgroundColorPressed);
+        return this;
+    }
+
+    public int getBackgroundColorUnable() {
+        return mBackgroundColorUnable;
+    }
+
+    public RTextView setBackgroundColorUnable(int colorUnable) {
+        this.mBackgroundColorUnable = colorUnable;
+        mBackgroundUnable.setColor(mBackgroundColorUnable);
+        return this;
+    }
+
+    /************************
+     * Typeface
+     ************************/
+
+    public RTextView setTypeface(String typefacePath) {
+        this.mTypefacePath = typefacePath;
+        setTypeface();
+        return this;
+    }
+
+    public String getTypefacePath() {
+        return mTypefacePath;
+    }
+
+    private void setTypeface() {
+        if (!TextUtils.isEmpty(mTypefacePath)) {
+            AssetManager assetManager = mContext.getAssets();
+            Typeface typeface = Typeface.createFromAsset(assetManager, mTypefacePath);
+            setTypeface(typeface);
+        }
     }
 
     /************************

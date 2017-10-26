@@ -50,6 +50,9 @@
             <enum name="bottom" value="4" />
         </attr>
 
+        <!--字体样式-->
+        <attr name="text_typeface" format="string" />
+
     </declare-styleable>
 
 </resources>
