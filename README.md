@@ -58,11 +58,12 @@
 | icon_height      				| 	drawable icon 	高 			|
 | icon_width      				|   drawable icon 	宽 			|
 | icon_direction      			|   drawable icon 	位置{left,top,right,bottom} |
+| text_typeface      			|   字体样式 |
 
 ### 4.使用
 > ### 4.1  Gradle （版本号根据更新历史使用最新版）
 
-    compile 'com.ruffian.library:RTextView:1.0.0'
+    compile 'com.ruffian.library:RTextView:1.0.1'
 
 > ### 4.2 XML使用
 
@@ -116,6 +117,9 @@
         rtv:text_color_normal="#c3c3c3"
         rtv:text_color_pressed="#3F51B5"
         rtv:text_color_unable="#FF4081"
+
+		//字体样式
+		rtv:text_typeface="fonts/RobotoMono-Thin.ttf"
         />
 
 
@@ -131,7 +135,13 @@
         int iconHeight=textView.getIconHeight();
 
 
+> ### 4.4 备注
+
+	1. 圆角边框，圆角背景等属性需要配合 `background_xxx` 自定义背景属性使用，原生 `background` 没有效果
+
 ### 5.版本历史
+
+**v1.0.1**　`2017.10.26`　添加Typeface,完善代码
 
 **v1.0.0**　`2017.09.07`　发布第一版本
 
