@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFragmentList.add(new FragmentCorner());
         mFragmentList.add(new FragmentState());
+        mFragmentList.add(new FragmentVersion());
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
