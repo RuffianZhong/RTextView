@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -273,13 +274,26 @@ public class RTextView extends TextView {
 
         if (mBackgroundColorNormal == 0 && mBackgroundColorUnable == 0 && mBackgroundColorPressed == 0) {//未设置自定义背景色
             if (mBorderColorPressed == 0 && mBorderColorUnable == 0 && mBorderColorNormal == 0) {//未设置自定义边框
-                setBackground(getBackground());//获取原生背景并设置
+                //获取原生背景并设置
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    setBackgroundDrawable(getBackground());
+                } else {
+                    setBackground(getBackground());
+                }
             } else {
-                setBackground(mStateBackground);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    setBackgroundDrawable(mStateBackground);
+                } else {
+                    setBackground(mStateBackground);
+                }
             }
         } else {
             //设置背景资源
-            setBackground(mStateBackground);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                setBackgroundDrawable(mStateBackground);
+            } else {
+                setBackground(mStateBackground);
+            }
         }
 
 
