@@ -49,9 +49,9 @@ public class RTextView extends TextView {
     //BorderWidth
     private float mBorderDashWidth = 0;
     private float mBorderDashGap = 0;
-    private int mBorderWidthNormal;
-    private int mBorderWidthPressed;
-    private int mBorderWidthUnable;
+    private int mBorderWidthNormal = 0;
+    private int mBorderWidthPressed = 0;
+    private int mBorderWidthUnable = 0;
 
     //BorderColor
     private int mBorderColorNormal;
@@ -167,6 +167,7 @@ public class RTextView extends TextView {
      */
     private void initAttributeSet(Context context, AttributeSet attrs) {
         if (context == null || attrs == null) {
+            setup();
             return;
         }
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RTextView);
@@ -275,25 +276,13 @@ public class RTextView extends TextView {
         if (mBackgroundColorNormal == 0 && mBackgroundColorUnable == 0 && mBackgroundColorPressed == 0) {//未设置自定义背景色
             if (mBorderColorPressed == 0 && mBorderColorUnable == 0 && mBorderColorNormal == 0) {//未设置自定义边框
                 //获取原生背景并设置
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    setBackgroundDrawable(getBackground());
-                } else {
-                    setBackground(getBackground());
-                }
+                setBackgroundState(true);
             } else {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    setBackgroundDrawable(mStateBackground);
-                } else {
-                    setBackground(mStateBackground);
-                }
+                setBackgroundState(false);
             }
         } else {
             //设置背景资源
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                setBackgroundDrawable(mStateBackground);
-            } else {
-                setBackground(mStateBackground);
-            }
+            setBackgroundState(false);
         }
 
 
@@ -343,6 +332,7 @@ public class RTextView extends TextView {
         mBackgroundNormal.setColor(mBackgroundColorNormal);
         mBackgroundPressed.setColor(mBackgroundColorPressed);
         mBackgroundUnable.setColor(mBackgroundColorUnable);
+        setBackgroundState(false);
         return this;
     }
 
@@ -352,7 +342,19 @@ public class RTextView extends TextView {
 
     public RTextView setBackgroundColorNormal(int colorNormal) {
         this.mBackgroundColorNormal = colorNormal;
+        /**
+         * 设置背景默认值
+         */
+        if (mBackgroundColorPressed == 0) {
+            mBackgroundColorPressed = mBackgroundColorNormal;
+            mBackgroundPressed.setColor(mBackgroundColorPressed);
+        }
+        if (mBackgroundColorUnable == 0) {
+            mBackgroundColorUnable = mBackgroundColorNormal;
+            mBackgroundUnable.setColor(mBackgroundColorUnable);
+        }
         mBackgroundNormal.setColor(mBackgroundColorNormal);
+        setBackgroundState(false);
         return this;
     }
 
@@ -363,6 +365,7 @@ public class RTextView extends TextView {
     public RTextView setBackgroundColorPressed(int colorPressed) {
         this.mBackgroundColorPressed = colorPressed;
         mBackgroundPressed.setColor(mBackgroundColorPressed);
+        setBackgroundState(false);
         return this;
     }
 
@@ -373,8 +376,19 @@ public class RTextView extends TextView {
     public RTextView setBackgroundColorUnable(int colorUnable) {
         this.mBackgroundColorUnable = colorUnable;
         mBackgroundUnable.setColor(mBackgroundColorUnable);
+        setBackgroundState(false);
         return this;
     }
+
+    private void setBackgroundState(boolean unset) {
+        //设置背景资源
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            setBackgroundDrawable(unset ? getBackground() : mStateBackground);
+        } else {
+            setBackground(unset ? getBackground() : mStateBackground);
+        }
+    }
+
 
     /************************
      * Typeface
@@ -504,6 +518,12 @@ public class RTextView extends TextView {
 
     public RTextView setTextColorNormal(int textColor) {
         this.mTextColorNormal = textColor;
+        if (mTextColorPressed == 0) {
+            mTextColorPressed = mTextColorNormal;
+        }
+        if (mTextColorUnable == 0) {
+            mTextColorUnable = mTextColorNormal;
+        }
         setTextColor();
         return this;
     }
@@ -551,7 +571,15 @@ public class RTextView extends TextView {
 
     public RTextView setBorderWidthNormal(int width) {
         this.mBorderWidthNormal = width;
-        setBorder(mBackgroundNormal, mBorderColorNormal, mBorderWidthNormal);
+        if (mBorderWidthPressed == 0) {
+            mBorderWidthPressed = mBorderWidthNormal;
+            setBorderPressed();
+        }
+        if (mBorderWidthUnable == 0) {
+            mBorderWidthUnable = mBorderWidthNormal;
+            setBorderUnable();
+        }
+        setBorderNormal();
         return this;
     }
 
@@ -561,7 +589,15 @@ public class RTextView extends TextView {
 
     public RTextView setBorderColorNormal(int color) {
         this.mBorderColorNormal = color;
-        setBorder(mBackgroundNormal, mBorderColorNormal, mBorderWidthNormal);
+        if (mBorderColorPressed == 0) {
+            mBorderColorPressed = mBorderColorNormal;
+            setBorderPressed();
+        }
+        if (mBorderColorUnable == 0) {
+            mBorderColorUnable = mBorderColorNormal;
+            setBorderUnable();
+        }
+        setBorderNormal();
         return this;
     }
 
@@ -571,7 +607,7 @@ public class RTextView extends TextView {
 
     public RTextView setBorderWidthPressed(int width) {
         this.mBorderWidthPressed = width;
-        setBorder(mBackgroundPressed, mBorderColorPressed, mBorderWidthPressed);
+        setBorderPressed();
         return this;
     }
 
@@ -581,7 +617,7 @@ public class RTextView extends TextView {
 
     public RTextView setBorderColorPressed(int color) {
         this.mBorderColorPressed = color;
-        setBorder(mBackgroundPressed, mBorderColorPressed, mBorderWidthPressed);
+        setBorderPressed();
         return this;
     }
 
@@ -591,7 +627,7 @@ public class RTextView extends TextView {
 
     public RTextView setBorderWidthUnable(int width) {
         this.mBorderWidthUnable = width;
-        setBorder(mBackgroundUnable, mBorderColorUnable, mBorderWidthUnable);
+        setBorderUnable();
         return this;
     }
 
@@ -601,7 +637,7 @@ public class RTextView extends TextView {
 
     public RTextView setBorderColorUnable(int color) {
         this.mBorderColorUnable = color;
-        setBorder(mBackgroundUnable, mBorderColorUnable, mBorderWidthUnable);
+        setBorderUnable();
         return this;
     }
 
@@ -648,14 +684,27 @@ public class RTextView extends TextView {
     }
 
     private void setBorder() {
-        setBorder(mBackgroundNormal, mBorderColorNormal, mBorderWidthNormal);
-        setBorder(mBackgroundPressed, mBorderColorPressed, mBorderWidthPressed);
-        setBorder(mBackgroundUnable, mBorderColorUnable, mBorderWidthUnable);
+        mBackgroundNormal.setStroke(mBorderWidthNormal, mBorderColorNormal, mBorderDashWidth, mBorderDashGap);
+        mBackgroundPressed.setStroke(mBorderWidthPressed, mBorderColorPressed, mBorderDashWidth, mBorderDashGap);
+        mBackgroundUnable.setStroke(mBorderWidthUnable, mBorderColorUnable, mBorderDashWidth, mBorderDashGap);
+        setBackgroundState(false);
     }
 
-    private void setBorder(GradientDrawable background, int borderColor, int borderWidth) {
-        background.setStroke(borderWidth, borderColor, mBorderDashWidth, mBorderDashGap);
+    private void setBorderNormal() {
+        mBackgroundNormal.setStroke(mBorderWidthNormal, mBorderColorNormal, mBorderDashWidth, mBorderDashGap);
+        setBackgroundState(false);
     }
+
+    private void setBorderPressed() {
+        mBackgroundPressed.setStroke(mBorderWidthPressed, mBorderColorPressed, mBorderDashWidth, mBorderDashGap);
+        setBackgroundState(false);
+    }
+
+    private void setBorderUnable() {
+        mBackgroundUnable.setStroke(mBorderWidthUnable, mBorderColorUnable, mBorderDashWidth, mBorderDashGap);
+        setBackgroundState(false);
+    }
+
 
     /*********************
      * radius
@@ -673,6 +722,7 @@ public class RTextView extends TextView {
     public RTextView setCornerRadiusTopLeft(float topLeft) {
         this.mCornerRadius = -1;
         this.mCornerRadiusTopLeft = topLeft;
+        setRadius();
         return this;
     }
 
@@ -683,6 +733,7 @@ public class RTextView extends TextView {
     public RTextView setCornerRadiusTopRight(float topRight) {
         this.mCornerRadius = -1;
         this.mCornerRadiusTopRight = topRight;
+        setRadius();
         return this;
     }
 
@@ -693,6 +744,7 @@ public class RTextView extends TextView {
     public RTextView setCornerRadiusBottomRight(float bottomRight) {
         this.mCornerRadius = -1;
         this.mCornerRadiusBottomRight = bottomRight;
+        setRadius();
         return this;
     }
 
@@ -703,10 +755,11 @@ public class RTextView extends TextView {
     public RTextView setCornerRadiusBottomLeft(float bottomLeft) {
         this.mCornerRadius = -1;
         this.mCornerRadiusBottomLeft = bottomLeft;
+        setRadius();
         return this;
     }
 
-    public float setCornerRadiusBottomLeft() {
+    public float getCornerRadiusBottomLeft() {
         return mCornerRadiusBottomLeft;
     }
 
@@ -723,6 +776,7 @@ public class RTextView extends TextView {
         mBackgroundNormal.setCornerRadii(mBorderRadii);
         mBackgroundPressed.setCornerRadii(mBorderRadii);
         mBackgroundUnable.setCornerRadii(mBorderRadii);
+        setBackgroundState(false);
     }
 
     private void setRadius() {
