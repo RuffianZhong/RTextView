@@ -67,7 +67,7 @@
 ### 4.使用
 > ### 4.1  Gradle （版本号根据更新历史使用最新版）
 
-    compile 'com.ruffian.library:RTextView:1.0.4'
+    compile 'com.ruffian.library:RTextView:1.0.5'
 
 > ### 4.2 XML使用
 
@@ -145,7 +145,7 @@
 
 ### 5.版本历史
 
-**v1.0.4**　`2018.02.26`　修改BUG
+**v1.0.4 ~ v1.0.5**　`2018.02.26`　修改BUG
 
 **v1.0.2 ~ v1.0.3**　`2017.11.14`　修改BUG
 
