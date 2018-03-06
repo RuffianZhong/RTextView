@@ -216,13 +216,12 @@ public class RTextView extends TextView {
 
         a.recycle();
 
-        mHasPressedBgColor = mBackgroundColorPressed > 0;
-        mHasUnableBgColor = mBackgroundColorUnable > 0;
-        mHasPressedBorderColor = mBorderColorPressed > 0;
-        mHasUnableBorderColor = mBorderColorUnable > 0;
-        mHasPressedBorderWidth = mBorderWidthPressed > 0;
-        mHasUnableBorderWidth = mBorderWidthUnable > 0;
-
+        mHasPressedBgColor = mBackgroundColorPressed < 0;
+        mHasUnableBgColor = mBackgroundColorUnable < 0;
+        mHasPressedBorderColor = mBorderColorPressed < 0;
+        mHasUnableBorderColor = mBorderColorUnable < 0;
+        mHasPressedBorderWidth = mBorderWidthPressed < 0;
+        mHasUnableBorderWidth = mBorderWidthUnable < 0;
 
         //setup
         setup();
