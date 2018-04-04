@@ -12,6 +12,8 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.TextView;
@@ -268,10 +270,20 @@ public class RTextView extends TextView {
         mStateBackground.addState(states[3], mBackgroundUnable);
         mStateBackground.addState(states[2], mBackgroundNormal);
 
+        /**
+         * icon
+         */
         if (isEnabled() == false) {
             mIcon = mIconUnable;
         } else {
             mIcon = mIconNormal;
+        }
+        //未设置图片大小
+        if (mIconHeight == 0 && mIconWidth == 0) {
+            if (mIcon != null) {
+                mIconWidth = mIcon.getIntrinsicWidth();
+                mIconHeight = mIcon.getIntrinsicHeight();
+            }
         }
 
         /**
@@ -835,5 +847,10 @@ public class RTextView extends TextView {
             return;
         }
     }
+
+    private float dp2px(int dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
 
 }
