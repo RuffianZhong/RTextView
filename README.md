@@ -67,7 +67,7 @@
 ### 4.使用
 > ### 4.1  Gradle （版本号根据更新历史使用最新版）
 
-    compile 'com.ruffian.library:RTextView:1.0.6'
+    compile 'com.ruffian.library:RTextView:1.0.7'
 
 > ### 4.2 XML使用
 
@@ -145,6 +145,7 @@
 
 ### 5.版本历史
 
+**v1.0.7**　`2018.04.04`　未设置icon宽高时，默认使用icon大小
 
 **v1.0.6**　`2018.03.06`　修改BUG
 
