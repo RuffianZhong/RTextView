@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 8
+        versionName "1.0.8"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -37,7 +37,7 @@ publish {
     userOrg = 'ruffian'
     groupId = 'com.ruffian.library'
     artifactId = 'RTextView'
-    publishVersion = '1.0.7'
+    publishVersion = '1.0.8'
     desc = 'A textview for developer easy to use.'
     website = 'https://github.com/RuffianZhong/RTextView'
 }
