@@ -67,7 +67,7 @@
 ### 4.使用
 > ### 4.1  Gradle （版本号根据更新历史使用最新版）
 
-    compile 'com.ruffian.library:RTextView:1.0.7'
+    compile 'com.ruffian.library:RTextView:1.0.8'
 
 > ### 4.2 XML使用
 
@@ -144,6 +144,8 @@
 	1. 圆角边框，圆角背景等属性需要配合 `background_xxx` 自定义背景属性使用，原生 `background` 没有效果
 
 ### 5.版本历史
+
+**v1.0.8**　`2018.04.09`　兼容5.0以下 VectorDrawable(矢量图)  [issues #8](https://github.com/RuffianZhong/RTextView/issues/8)
 
 **v1.0.7**　`2018.04.04`　未设置icon宽高时，默认使用icon大小
 
