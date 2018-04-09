@@ -10,10 +10,11 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.TextView;
@@ -92,6 +93,7 @@ public class RTextView extends TextView {
      */
     private int mTouchSlop;
     private Context mContext;
+    private GestureDetector mGestureDetector;
 
     /**
      * 是否设置对应的属性
@@ -111,6 +113,7 @@ public class RTextView extends TextView {
         super(context, attrs);
         mContext = context;
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        mGestureDetector = new GestureDetector(context, new SimpleOnGesture());
         initAttributeSet(context, attrs);
     }
 
@@ -132,19 +135,9 @@ public class RTextView extends TextView {
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
+        mGestureDetector.onTouchEvent(event);
         int action = event.getAction();
         switch (action) {
-            case MotionEvent.ACTION_DOWN://按下
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mIconPressed != null) {
-                            mIcon = mIconPressed;
-                            setIcon();
-                        }
-                    }
-                }, ViewConfiguration.getTapTimeout());
-                break;
             case MotionEvent.ACTION_UP://抬起
                 if (mIconNormal != null) {
                     mIcon = mIconNormal;
@@ -199,9 +192,23 @@ public class RTextView extends TextView {
         mBorderColorPressed = a.getColor(R.styleable.RTextView_border_color_pressed, Color.TRANSPARENT);
         mBorderColorUnable = a.getColor(R.styleable.RTextView_border_color_unable, Color.TRANSPARENT);
         //icon
-        mIconNormal = a.getDrawable(R.styleable.RTextView_icon_src_normal);
-        mIconPressed = a.getDrawable(R.styleable.RTextView_icon_src_pressed);
-        mIconUnable = a.getDrawable(R.styleable.RTextView_icon_src_unable);
+        //Vector兼容处理
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mIconNormal = a.getDrawable(R.styleable.RTextView_icon_src_normal);
+            mIconPressed = a.getDrawable(R.styleable.RTextView_icon_src_pressed);
+            mIconUnable = a.getDrawable(R.styleable.RTextView_icon_src_unable);
+        } else {
+            int normalId = a.getResourceId(R.styleable.RTextView_icon_src_normal, -1);
+            int pressedId = a.getResourceId(R.styleable.RTextView_icon_src_pressed, -1);
+            int unableId = a.getResourceId(R.styleable.RTextView_icon_src_unable, -1);
+
+            if (normalId != -1)
+                mIconNormal = AppCompatResources.getDrawable(context, normalId);
+            if (pressedId != -1)
+                mIconPressed = AppCompatResources.getDrawable(context, pressedId);
+            if (unableId != -1)
+                mIconUnable = AppCompatResources.getDrawable(context, unableId);
+        }
         mIconWidth = a.getDimensionPixelSize(R.styleable.RTextView_icon_width, 0);
         mIconHeight = a.getDimensionPixelSize(R.styleable.RTextView_icon_height, 0);
         mIconDirection = a.getInt(R.styleable.RTextView_icon_direction, ICON_DIR_LEFT);
@@ -852,5 +859,26 @@ public class RTextView extends TextView {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 
+    /**
+     * 手势处理
+     */
+    class SimpleOnGesture extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public void onShowPress(MotionEvent e) {
+            if (mIconPressed != null) {
+                mIcon = mIconPressed;
+                setIcon();
+            }
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            if (mIconNormal != null) {
+                mIcon = mIconNormal;
+                setIcon();
+            }
+            return false;
+        }
+    }
 
 }
