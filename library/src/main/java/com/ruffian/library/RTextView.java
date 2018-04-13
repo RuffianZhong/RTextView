@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -310,12 +311,14 @@ public class RTextView extends TextView {
         }
 
         if (mBackgroundColorNormal == 0 && mBackgroundColorUnable == 0 && mBackgroundColorPressed == 0) {//未设置自定义背景色
-            if (mBorderColorPressed == 0 && mBorderColorUnable == 0 && mBorderColorNormal == 0) {//未设置自定义边框
+           /* if (mBorderColorPressed == 0 && mBorderColorUnable == 0 && mBorderColorNormal == 0) {//未设置自定义边框
                 //获取原生背景并设置
                 setBackgroundState(true);
             } else {
                 setBackgroundState(false);
-            }
+            }*/
+            //获取原生背景并设置
+            setBackgroundState(true);
         } else {
             //设置背景资源
             setBackgroundState(false);
@@ -421,11 +424,19 @@ public class RTextView extends TextView {
     }
 
     private void setBackgroundState(boolean unset) {
+
+        //未设置自定义属性,并且设置背景颜色时
+        Drawable drawable = getBackground();
+        if (unset && drawable instanceof ColorDrawable) {
+            int color = ((ColorDrawable) drawable).getColor();
+            setStateBackgroundColor(color, color, color);//获取背景颜色值设置 StateListDrawable
+        }
+
         //设置背景资源
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            setBackgroundDrawable(unset ? getBackground() : mStateBackground);
+            setBackgroundDrawable(unset ? drawable : mStateBackground);
         } else {
-            setBackground(unset ? getBackground() : mStateBackground);
+            setBackground(unset ? drawable : mStateBackground);
         }
     }
 
