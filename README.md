@@ -3,6 +3,8 @@
 
 ## 欢迎使用 RTextView 
 
+## 强势上线升级版，针对安卓基础控件的封装 [RWidgetHelper](https://github.com/RuffianZhong/RWidgetHelper) 
+
 ### 1.特点
 
 > 1. RTextView 让你从此不再编写和管理大量 selector 文件（这个太可恨了）
