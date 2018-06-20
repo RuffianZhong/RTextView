@@ -226,12 +226,12 @@ public class RTextView extends TextView {
 
         a.recycle();
 
-        mHasPressedBgColor = mBackgroundColorPressed < 0;
-        mHasUnableBgColor = mBackgroundColorUnable < 0;
-        mHasPressedBorderColor = mBorderColorPressed < 0;
-        mHasUnableBorderColor = mBorderColorUnable < 0;
-        mHasPressedBorderWidth = mBorderWidthPressed < 0;
-        mHasUnableBorderWidth = mBorderWidthUnable < 0;
+        mHasPressedBgColor = mBackgroundColorPressed != 0;
+        mHasUnableBgColor = mBackgroundColorUnable != 0;
+        mHasPressedBorderColor = mBorderColorPressed != 0;
+        mHasUnableBorderColor = mBorderColorUnable != 0;
+        mHasPressedBorderWidth = mBorderWidthPressed != 0;
+        mHasUnableBorderWidth = mBorderWidthUnable != 0;
 
         //setup
         setup();
@@ -285,13 +285,6 @@ public class RTextView extends TextView {
             mIcon = mIconUnable;
         } else {
             mIcon = mIconNormal;
-        }
-        //未设置图片大小
-        if (mIconHeight == 0 && mIconWidth == 0) {
-            if (mIcon != null) {
-                mIconWidth = mIcon.getIntrinsicWidth();
-                mIconHeight = mIcon.getIntrinsicHeight();
-            }
         }
 
         /**
@@ -538,6 +531,13 @@ public class RTextView extends TextView {
     }
 
     private void setIcon() {
+        //未设置图片大小
+        if (mIconHeight == 0 && mIconWidth == 0) {
+            if (mIcon != null) {
+                mIconWidth = mIcon.getIntrinsicWidth();
+                mIconHeight = mIcon.getIntrinsicHeight();
+            }
+        }
         setIcon(mIcon, mIconWidth, mIconHeight, mIconDirection);
     }
 
