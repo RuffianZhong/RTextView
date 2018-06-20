@@ -69,7 +69,7 @@
 ### 4.使用
 > ### 4.1  Gradle （版本号根据更新历史使用最新版）
 
-    compile 'com.ruffian.library:RTextView:1.0.9'
+    compile 'com.ruffian.library:RTextView:1.0.10'
 
 > ### 4.2 XML使用
 
@@ -146,6 +146,8 @@
 	1. 圆角边框，圆角背景等属性需要配合 `background_xxx` 自定义背景属性使用，原生 `background` 没有效果
 
 ### 5.版本历史
+
+**v1.0.10**　`2018.06.20`　修改BUG [issues #9](https://github.com/RuffianZhong/RTextView/issues/9)
 
 **v1.0.9**　`2018.04.13`　修复原生属性 `background` 为纯颜色时没效果bug
 
