@@ -69,7 +69,7 @@
 ### 4.使用
 > ### 4.1  Gradle （版本号根据更新历史使用最新版）
 
-    compile 'com.ruffian.library:RTextView:1.0.10'
+    compile 'com.ruffian.library:RTextView:1.0.11'
 
 > ### 4.2 XML使用
 
@@ -147,11 +147,13 @@
 
 ### 5.版本历史
 
+**v1.0.11**　`2018.08.20`　优化 `onTouchEvent` 方法
+
 **v1.0.10**　`2018.06.20`　修改BUG [issues #9](https://github.com/RuffianZhong/RTextView/issues/9)
 
 **v1.0.9**　`2018.04.13`　修复原生属性 `background` 为纯颜色时没效果bug
 
-**v1.0.8**　`2018.04.09`　兼容5.0以下 VectorDrawable(矢量图)  [issues #8](https://github.com/RuffianZhong/RTextView/issues/8)
+**v1.0.8**　`2018.04.09`　兼容5.0以下 `VectorDrawable` (矢量图)  [issues #8](https://github.com/RuffianZhong/RTextView/issues/8)
 
 **v1.0.7**　`2018.04.04`　未设置icon宽高时，默认使用icon大小
 
@@ -161,7 +163,7 @@
 
 **v1.0.2 ~ v1.0.3**　`2017.11.14`　修改BUG
 
-**v1.0.1**　`2017.10.26`　添加Typeface,完善代码
+**v1.0.1**　`2017.10.26`　添加 `Typeface`,完善代码
 
 **v1.0.0**　`2017.09.07`　发布第一版本
 
