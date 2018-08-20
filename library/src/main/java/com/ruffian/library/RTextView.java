@@ -136,6 +136,7 @@ public class RTextView extends TextView {
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
+        if (!isEnabled()) return true;
         mGestureDetector.onTouchEvent(event);
         int action = event.getAction();
         switch (action) {
