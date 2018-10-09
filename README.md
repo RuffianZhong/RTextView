@@ -3,7 +3,8 @@
 
 ## 欢迎使用 RTextView 
 
-## 强势上线升级版，针对安卓基础控件的封装 [RWidgetHelper](https://github.com/RuffianZhong/RWidgetHelper) 
+## 此项目会一直维护，但不再新增功能，推荐关注更完善项目 [RWidgetHelper](https://github.com/RuffianZhong/RWidgetHelper) 
+
 
 ### 1.特点
 
